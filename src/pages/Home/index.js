@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { DownloadLink } from "../../components/Document";
+import { DownloadLink, Preview } from "../../components/Document";
 import { Background, Container, Button, StyledText, FileInput } from "./styles";
 import {
   FormBox,
@@ -65,7 +65,8 @@ function Home() {
             </Button>
           </InputContainer>
         </FormBox>
-        <DownloadLink data={pdfData} />
+        {/* <DownloadLink data={pdfData} /> */}
+        <Preview data={pdfData} />
         {Object.keys(pdfData).map((category) => (
           <StyledText key={category}>
             <span>

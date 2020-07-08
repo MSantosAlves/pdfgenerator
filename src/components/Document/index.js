@@ -1,50 +1,45 @@
-import React, { Fragment } from "react";
+import React from "react";
 import {
-  Page,
-  Text,
-  View,
   Document,
-  StyleSheet,
   PDFDownloadLink,
   Image,
+  PDFViewer,
 } from "@react-pdf/renderer";
 
 import { Button } from "../../pages/Home/styles";
-
-// Create styles
-const styles = StyleSheet.create({
-  page: {
-    flexDirection: "column",
-    backgroundColor: "#E4E4E4",
-  },
-  section: {
-    margin: 10,
-    padding: 10,
-    flexGrow: 1,
-  },
-});
+import {
+  Page,
+  Category,
+  CategoryBox,
+  Grid,
+  Product,
+  Name,
+  Price,
+} from "./styles";
 
 // Create Document Component
 const MyDocument = ({ data }) => (
   <Document>
     {console.log("doc products", data)}
 
-    <Page size="A4" style={styles.page}>
+    <Page size="A4">
       {Object.keys(data).map((category) => {
         return (
-          <View style={styles.section} key={category}>
-            <Text>Categoria: {category}</Text>
-            {data[category].map((product) => (
-              <Fragment key={product.name}>
-                <Text>Nome: {product.name}</Text>
-                <Image
-                  src={product.image.base64}
-                  style={{ width: "200px", height: "200px" }}
-                />
-                <Text>Preço: R$ {product.price}</Text>
-              </Fragment>
-            ))}
-          </View>
+          <CategoryBox key={category}>
+            <Category>{category}</Category>
+            <Grid>
+              {data[category].map((product) => (
+                <Product key={product.name} wrap={false}>
+                  <Image
+                    src={product.image.base64}
+                    style={{ width: "100%", height: "250px" }}
+                  />
+                  <Name>{product.name}</Name>
+                  <Price>Preço: R$ {product.price}</Price>
+                </Product>
+              ))}
+            </Grid>
+          </CategoryBox>
         );
       })}
     </Page>
@@ -53,10 +48,19 @@ const MyDocument = ({ data }) => (
 
 export const DownloadLink = ({ data }) => (
   <div>
-    <PDFDownloadLink document={<MyDocument data={data} />} fileName="test.pdf">
+    <PDFDownloadLink
+      document={<MyDocument data={data} />}
+      fileName="recomendacoes.pdf"
+    >
       <Button border primary>
         Baixar PDF
       </Button>
     </PDFDownloadLink>
   </div>
+);
+
+export const Preview = ({ data }) => (
+  <PDFViewer style={{ width: "100%", height: "100%" }}>
+    <MyDocument data={data} />
+  </PDFViewer>
 );
