@@ -6,6 +6,7 @@ import {
   Document,
   StyleSheet,
   PDFDownloadLink,
+  Image,
 } from "@react-pdf/renderer";
 
 import { Button } from "../../pages/Home/styles";
@@ -36,6 +37,10 @@ const MyDocument = ({ data }) => (
             {data[category].map((product) => (
               <Fragment key={product.name}>
                 <Text>Nome: {product.name}</Text>
+                <Image
+                  src={product.image.base64}
+                  style={{ width: "200px", height: "200px" }}
+                />
                 <Text>Preço: R$ {product.price}</Text>
               </Fragment>
             ))}

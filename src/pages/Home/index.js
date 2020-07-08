@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { DownloadLink } from "../../components/Document";
-import { Background, Container, Button, StyledText } from "./styles";
+import { Background, Container, Button, StyledText, FileInput } from "./styles";
 import {
   FormBox,
   InputContainer,
@@ -13,12 +13,14 @@ import TextInput from "../../components/Form/TextInput";
 function Home() {
   const formRef = useRef();
   const [pdfData, setPdfData] = useState({});
+  const [selectedFile, setFile] = useState(null);
 
   function handleSubmit(data) {
     const categories = Object.keys(pdfData);
     const product = {
       name: data.name,
       price: data.price,
+      image: selectedFile,
     };
     const index = categories.indexOf(data.category);
     let aux = pdfData;
@@ -29,9 +31,15 @@ function Home() {
       aux[category] = [product];
     }
     setPdfData({ ...aux });
-    console.log("categories", categories);
-    console.log("data", data);
-    console.log("products", pdfData);
+  }
+
+  function handleUploadFile(event) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      setFile({ base64: reader.result, nome: file.name });
+    };
   }
 
   return (
@@ -48,16 +56,18 @@ function Home() {
             <TextInput name="name" />
             <FieldTitle>Preço do produto</FieldTitle>
             <TextInput name="price" />
+            <FieldTitle style={{ margin: "20px auto" }}>
+              Imagem do produto
+            </FieldTitle>
+            <FileInput onChange={(e) => handleUploadFile(e)} />
             <Button round primary>
               Adicionar produto
             </Button>
           </InputContainer>
         </FormBox>
-
         <DownloadLink data={pdfData} />
-
         {Object.keys(pdfData).map((category) => (
-          <StyledText>
+          <StyledText key={category}>
             <span>
               {category}: {pdfData[category].length} produto(s) adicionado(s).
             </span>

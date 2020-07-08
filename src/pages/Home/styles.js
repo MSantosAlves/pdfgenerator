@@ -35,3 +35,9 @@ export const StyledText = styled.span`
     }
   }
 `;
+
+export const FileInput = styled.input.attrs({
+  type: "file",
+})`
+  margin: 0px auto 20px;
+`;
