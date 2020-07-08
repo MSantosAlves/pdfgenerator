@@ -36,6 +36,16 @@ export const StyledText = styled.span`
   }
 `;
 
+export const ErrorText = styled.span`
+  font-family: "Lato", sans-serif;
+  margin: 5px auto;
+  color: #d8000c;
+  font-size: 18px;
+  @media (max-width: 600px) {
+    font-size: 1.2em;
+  }
+`;
+
 export const FileInput = styled.input.attrs({
   type: "file",
 })`

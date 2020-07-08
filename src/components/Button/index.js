@@ -5,18 +5,18 @@ import styled from "styled-components";
  * @param primary => background -> #320054
  */
 const Button = styled.button`
-  background: ${props =>
+  background: ${(props) =>
     props.primary
       ? "#320054 0% 0% no-repeat padding-box"
       : "#845891 0% 0% no-repeat padding-box"};
-  border-radius: ${props => (props.round ? "20px" : "0px")};
+  border-radius: ${(props) => (props.round ? "20px" : "0px")};
   opacity: 1;
   text-align: left;
   letter-spacing: 0px;
 
   color: #ffffff;
   opacity: 1;
-  border: ${props => (props.border ? "1px solid #FFFFFF" : "none")};
+  border: ${(props) => (props.border ? "1px solid #FFFFFF" : "none")};
   padding-left: 27px;
   padding-right: 27px;
 
@@ -29,6 +29,10 @@ const Button = styled.button`
 
   :focus {
     outline: none;
+  }
+
+  :hover {
+    cursor: pointer;
   }
 `;
 
