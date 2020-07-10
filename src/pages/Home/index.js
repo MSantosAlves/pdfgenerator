@@ -157,8 +157,6 @@ function Home() {
             </Button>
           </InputContainer>
         </FormBox>
-
-        <Preview data={pdfData} user={user} />
         {Object.keys(pdfData).map((category) => (
           <StyledText key={category}>
             <span>
@@ -166,6 +164,7 @@ function Home() {
             </span>
           </StyledText>
         ))}
+        <Preview data={pdfData} user={user} />
       </Container>
     </Background>
   );

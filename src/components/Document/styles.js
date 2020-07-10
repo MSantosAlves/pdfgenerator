@@ -7,15 +7,19 @@ export const Page = styled.Page`
 `;
 
 export const CategoryBox = styled.View`
-  margin: 20px 0px;
-  align-items: center;
+  padding: 0px 12% 10px;
 `;
 
 export const Grid = styled.View`
   flex-direction: row;
   flex-wrap: wrap;
-  width: 100%;
-  justify-content: space-around;
+  justify-content: space-between;
+`;
+
+export const Divider = styled.View`
+  background: #ccc;
+  height: 2px;
+  margin: 20px 12%;
 `;
 
 export const LogoBox = styled.View`
@@ -26,26 +30,24 @@ export const LogoBox = styled.View`
 
 export const Product = styled.View`
   margin: 10px 0px;
-  width: 45%;
+  width: 200px;
   align-items: center;
 `;
 
 export const Category = styled.Text`
-  margin: 5px 0px;
+  margin: 0px 0px 5px;
   color: #320054;
   font-weight: bold;
   font-size: 32px;
 `;
 export const Name = styled.Text`
   margin: 5px 0px;
-  color: #444;
-  font-size: 22px;
+  font-size: 18px;
 `;
 export const Price = styled.Text`
   margin: 5px 0px;
-  color: #444;
   font-weight: bold;
-  font-size: 22px;
+  font-size: 18px;
 `;
 
 export const Email = styled.Text`
@@ -53,4 +55,13 @@ export const Email = styled.Text`
   margin: 5px auto;
   color: #320054;
   font-size: 18px;
+`;
+
+export const Footer = styled.View`
+  padding: 5px 20px;
+`;
+
+export const StyledText = styled.Text`
+  margin-bottom: 5px;
+  font-size: 14px;
 `;
