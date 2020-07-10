@@ -23,10 +23,12 @@ import TextInput from "../../components/Form/TextInput";
 
 function Home() {
   const formRef = useRef();
+  const userRef = useRef();
   const fileInputRef = useRef();
   const [pdfData, setPdfData] = useState({});
   const [selectedFile, setFile] = useState(null);
   const [error, setError] = useState(false);
+  const [user, setUser] = useState({});
 
   async function handleSubmit(data, { reset }) {
     try {
@@ -76,6 +78,35 @@ function Home() {
     }
   }
 
+  async function handleSubmitUser(data, { reset }) {
+    try {
+      const schema = Yup.object().shape({
+        email: Yup.string()
+          .email("*Por favor, insira um email válido.")
+          .required("*Por favor informe um email de usuário."),
+      });
+
+      await schema.validate(data, {
+        abortEarly: false,
+      });
+
+      setUser({ ...data });
+
+      userRef.current.setErrors({});
+      reset();
+      toast.success("Usuário adicionado com sucesso!");
+    } catch (err) {
+      if (err instanceof Yup.ValidationError) {
+        const errorMessages = {};
+        err.inner.forEach((error) => {
+          errorMessages[error.path] = error.message;
+        });
+        userRef.current.setErrors(errorMessages);
+      }
+      toast.warn("Erro ao adicionar usuário.");
+    }
+  }
+
   function handleUploadFile(event) {
     const file = event.target.files[0];
     const reader = new FileReader();
@@ -91,7 +122,7 @@ function Home() {
       <Container>
         <ToastContainer autoClose={2000} />
         <StyledMessage>
-          <span>PDF generator v1.0</span>
+          <span>Dados do produto</span>
         </StyledMessage>
         <FormBox ref={formRef} onSubmit={handleSubmit}>
           <InputContainer>
@@ -114,7 +145,20 @@ function Home() {
             </Button>
           </InputContainer>
         </FormBox>
-        <Preview data={pdfData} />
+        <StyledMessage>
+          <span>Dados do usuário</span>
+        </StyledMessage>
+        <FormBox ref={userRef} onSubmit={handleSubmitUser}>
+          <InputContainer>
+            <FieldTitle>Email de usuário</FieldTitle>
+            <TextInput name="email" />
+            <Button round primary>
+              Adicionar dados de usuário
+            </Button>
+          </InputContainer>
+        </FormBox>
+
+        <Preview data={pdfData} user={user} />
         {Object.keys(pdfData).map((category) => (
           <StyledText key={category}>
             <span>
